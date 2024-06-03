@@ -5,8 +5,8 @@ import path from "path";
 
 
 const app = express();
-const httpServer = http.createServer(app);
-const io = new Server(httpServer);
+const server = http.createServer(app);
+const io = new Server(server);
 
 app.get("/", (req, res) => {
     const options = {
@@ -16,24 +16,24 @@ app.get("/", (req, res) => {
     res.sendFile(fileName, options); 
 });
 
-io.on('connection' , function(socket){
-    console.log('A user connected');
-    
-    // setTimeout(() =>{
-        
-    //     socket.emit('myCustomEvent' , {description: 'A custom message from server side !'});
+var users = 0 ; 
 
-    // } , 3000) ;
-    
-    socket.on('myCustomEventFromClientSide' , (data) => {
-        console.log(data);
-    })
+
+io.on('connection' , (socket) => {
+    console.log('A user connected');
+    users++;
+    socket.emit('newUserConnect' , {message : ' HI Welcome dear'});
+
+    socket.broadcast.emit('newUserConnect' , {message: users + "users connected"}) ;
 
     socket.on('disconnect' , () => {
-        console.log('A user disconnected');
+        console.log("A user disconnected") ; 
+
+        users--;
+        socket.broadcast.emit('newUserConnect' , {message : users + ' users connected'});
     })
 }); 
 
-httpServer.listen(3000, () => {
-    console.log("Server ready on 3000");
+server.listen(3000, () => {
+    console.log("Server ready on PORT 3000");
 });

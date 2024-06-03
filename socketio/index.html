@@ -11,10 +11,10 @@
 
     <script>
         var socket = io();
-        // socket.on('myCustomEvent' , (data) => {
-        //     document.write(data.description) ; 
-        // })
-        socket.emit('myCustomEventFromClientSide' , 'A custom message from CLIENT side !');
-    </script>
+        socket.on('newUserConnect' , (data) => {
+            document.body.innerHTML = '' ; 
+            document.write(data.message); 
+        })
+</script>
 </body>
 </html>
