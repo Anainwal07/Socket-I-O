@@ -10,10 +10,10 @@
     <p>Hello World</p>
 
     <script>
-        var socket = io();
-        socket.on('newUserConnect' , (data) => {
+        var socket = io('/custom-namespace');
+        socket.on('customEvent' , (data) => {
             document.body.innerHTML = '' ; 
-            document.write(data.message); 
+            document.write(data); 
         })
 </script>
 </body>

@@ -16,22 +16,28 @@ app.get("/", (req, res) => {
     res.sendFile(fileName, options); 
 });
 
-var users = 0 ; 
+// var users = 0 ; 
 
 
-io.on('connection' , (socket) => {
+//custom-namespace
+var cnsp = io.of('/custom-namespace');
+
+cnsp.on('connection' , (socket) => {
     console.log('A user connected');
-    users++;
-    socket.emit('newUserConnect' , {message : ' HI Welcome dear'});
 
-    socket.broadcast.emit('newUserConnect' , {message: users + "users connected"}) ;
+    cnsp.emit('customEvent' , 'Tester event call') ; 
+    
+    // users++;
+    // socket.emit('newUserConnect' , {message : ' HI Welcome dear'});
+
+    // socket.broadcast.emit('newUserConnect' , {message: users + "users connected"}) ;
 
     socket.on('disconnect' , () => {
         console.log("A user disconnected") ; 
 
-        users--;
-        socket.broadcast.emit('newUserConnect' , {message : users + ' users connected'});
-    })
+    //     users--;
+    //     socket.broadcast.emit('newUserConnect' , {message : users + ' users connected'});
+     })
 }); 
 
 server.listen(3000, () => {
