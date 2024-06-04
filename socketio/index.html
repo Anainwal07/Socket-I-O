@@ -10,11 +10,16 @@
     <p>Hello World</p>
 
     <script>
-        var socket = io('/custom-namespace');
-        socket.on('customEvent' , (data) => {
+        // var socket = io('/custom-namespace');
+        // socket.on('customEvent' , (data) => {
+        //     document.body.innerHTML = '' ; 
+        //     document.write(data); 
+        // })
+        var socket = io() ; 
+        socket.on('connectedRoom' , (data) => {
             document.body.innerHTML = '' ; 
-            document.write(data); 
+            document.write(data) ; 
         })
-</script>
+    </script>
 </body>
 </html>
